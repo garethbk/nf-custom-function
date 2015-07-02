@@ -2,7 +2,7 @@
 /*
 Plugin Name: Ninja Forms Custom Functions
 Description: Custom functions for Ninja Forms to expand its functionality
-Version: 2.4.3
+Version: 2.4.4
 Author: Gareth bk
 Note: Each form has its own function - comment before each function says what the title & form id is
 To-do: Does global variable $ninja_forms_processing need to be declared each time?  Not sure.  There is a lot of old code for things that aren't used anymore in here, will clean out one day...
@@ -878,7 +878,7 @@ function plg_sequential(){
 }
 add_action('ninja_forms_pre_process', 'plg_sequential');
 
-/*  CVPA Peer Group Participant Registration Form [46] */
+/*  CVPA Peer Group Participant Registration Form [194] */
 function cvpapgr_functions() {
   global $ninja_forms_processing;
   $form_id = $ninja_forms_processing->get_form_ID();
@@ -913,7 +913,7 @@ function cvpapgr_functions() {
 }
 add_action('ninja_forms_pre_process', 'cvpapgr_functions');
 
-/*  CVPA Peer Group Call for Proposals Form [191] */
+/*  CVPA Peer Group Call for Proposals Form [190] */
 function cvpapgcfp_functions() {
   global $ninja_forms_processing;
   $form_id = $ninja_forms_processing->get_form_ID();
@@ -941,3 +941,67 @@ function cvpapgcfp_functions() {
   }
 }
 add_action('ninja_forms_pre_process', 'cvpapgcfp_functions');
+
+/*  Distance Ed Peer Group Participant Registration Form [216] */
+function depgr_functions() {
+  global $ninja_forms_processing;
+  $form_id = $ninja_forms_processing->get_form_ID();
+  if ($form_id == 216) {
+    /*  Confirms VCCS College/Agency is selected  */
+    $school_check = $ninja_forms_processing->get_field_value(3180);
+    if ($school_check == 1 ) {
+      $ninja_forms_processing->add_error('depgr_school_check', 'Please select a VCCS College/Agency');
+      $ninja_forms_processing->add_error('depgr_school_check_3180', 'Select a VCCS College/Agency', 3180);
+    }
+    /*  Confirms Discipline is selected  */
+    $dis_check = $ninja_forms_processing->get_field_value(3176);
+    if ($dis_check == 1 ) {
+      $ninja_forms_processing->add_error('depgr_dis_check', 'Please select a Discipline');
+      $ninja_forms_processing->add_error('depgr_dis_check_3176', 'Select a Discipline', 3176);
+    }
+    /*  Confirms Job Type is selected */
+    $job_check = $ninja_forms_processing->get_field_value(3178);
+    if ($job_check == 1) {
+      $ninja_forms_processing->add_error('depgr_job_check', 'Please select a Job Type');
+      $ninja_forms_processing->add_error('depgr_job_check_3178', 'Select a Job Type', 3178);
+    }
+    /*  Confirms email addresses entered match  */
+    $email_main = $ninja_forms_processing->get_field_value(3182);
+    $email_check = $ninja_forms_processing->get_field_value(3183);
+    if ($email_main !== $email_check) {
+      $ninja_forms_processing->add_error('depgr_email_check', 'Email addresses do not match');
+      $ninja_forms_processing->add_error('depgr_email_check_3182', 'Email addresses must match', 3182);
+      $ninja_forms_processing->add_error('depgr_email_check_3183', 'Email addresses must match', 3183);
+    }
+  }
+}
+add_action('ninja_forms_pre_process', 'depgr_functions');
+
+/*  Distance Ed Peer Group Call for Proposals Form [212] */
+function depgcfp_functions() {
+  global $ninja_forms_processing;
+  $form_id = $ninja_forms_processing->get_form_ID();
+  if ($form_id == 212) {
+    /*  Confirms VCCS College/Agency is selected  */
+    $school_check = $ninja_forms_processing->get_field_value(3122);
+    if ($school_check == 1 ) {
+      $ninja_forms_processing->add_error('depgcfp_school_check', 'Please select a VCCS College/Agency');
+      $ninja_forms_processing->add_error('depgcfp_school_check_3122', 'Select a VCCS College/Agency', 3122);
+    }
+     /*  Confirms Category is selected  */
+    $dis_check = $ninja_forms_processing->get_field_value(3111);
+    if ($dis_check == 1 ) {
+      $ninja_forms_processing->add_error('depgr_dis_check', 'Please select a Category');
+      $ninja_forms_processing->add_error('depgr_dis_check_3111', 'Select a Category', 3111);
+    }
+    /*  Confirms email addresses entered match  */
+    $email_main = $ninja_forms_processing->get_field_value(3123);
+    $email_check = $ninja_forms_processing->get_field_value(3124);
+    if ($email_main !== $email_check) {
+      $ninja_forms_processing->add_error('depgcfp_email_check', 'Email addresses do not match');
+      $ninja_forms_processing->add_error('depgcfp_email_check_3123', 'Email addresses must match', 3123);
+      $ninja_forms_processing->add_error('depgcfp_email_check_3124', 'Email addresses must match', 3124);
+    }
+  }
+}
+add_action('ninja_forms_pre_process', 'depgcfp_functions');
