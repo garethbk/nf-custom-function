@@ -988,12 +988,12 @@ function depgcfp_functions() {
       $ninja_forms_processing->add_error('depgcfp_school_check', 'Please select a VCCS College/Agency');
       $ninja_forms_processing->add_error('depgcfp_school_check_3122', 'Select a VCCS College/Agency', 3122);
     }
-     /*  Confirms Category is selected  */
+     /*  Confirms Category is selected  
     $dis_check = $ninja_forms_processing->get_field_value(3111);
     if ($dis_check == 1 ) {
       $ninja_forms_processing->add_error('depgr_dis_check', 'Please select a Category');
       $ninja_forms_processing->add_error('depgr_dis_check_3111', 'Select a Category', 3111);
-    }
+    }*/
     /*  Confirms email addresses entered match  */
     $email_main = $ninja_forms_processing->get_field_value(3123);
     $email_check = $ninja_forms_processing->get_field_value(3124);
